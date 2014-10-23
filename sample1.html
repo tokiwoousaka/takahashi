@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title></title>
+  <script type="text/javascript">
+    var Slide = ["<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h1>Takahashi Monad</h1><p>→キーで進む</p></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>高橋メソッドとは</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>でっかい文字</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>簡単な言葉</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>文字だけで勝負</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>必要にかられて生まれたらしい</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>でもメリット沢山</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>メリット１</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>見やすい</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>メリット２</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>表現が簡潔</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>少ない文字数が推敲の指針に！</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>メリット３</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>本番に強い</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>緊張してど忘れしたら</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>とりあえずページをめくれ！</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>Takahashi Monad</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>Haskellで型安全に高橋メソッドｗ</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>HTML手書きよりは楽でしょ？</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>地味に機能色々</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:80pt'><h2>さらに文字をでっかく</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:30pt'><h2>長めの文章を書く場合とか演出とかのためにこうやって字を小さく表示する事もできるよ</h2></div>","<div class='slide' style='color:#b40000;background:#ff6464;font-size:50pt'><h2>赤く表示</h2></div>","<div class='slide' style='color:#0000b4;background:#6464ff;font-size:50pt'><h2>青く表示</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>Monadだから拡張簡単</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>スライドをプログラミング</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>未知なる可能性？ｗ</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>問題点　沢山</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>セキュリティ最悪</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>多分、XSS余裕っす</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>デザインバランス最悪</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>高橋メソッドとはいえもうちょっと・・・</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>こういうスライドはちょくちょく作るので</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>多分徐々に改善されます</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>コードも表示できるようにしたいしね？</h2></div>","<div class='slide' style='color:#000000;background:#ffffff;font-size:50pt'><h2>ありがとうございました</h2></div>"]
+
+    var SlideIndex = 0;
+
+    function changeSlide(index){
+      if(0 > index || index >= Slide.length) return;
+
+      var slide = document.getElementById("slide");
+      SlideIndex = index;
+      slide.innerHTML = Slide[SlideIndex];
+    }
+
+    document.onkeydown = function(e){
+      if(e.keyCode == 39) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37) changeSlide(SlideIndex - 1);
+    }
+  </script>
+  <style>
+    .base {
+      width:100%; 
+      height:100%; 
+      text-align:center; 
+      display:table;
+    }
+    .slide {
+      display:table-cell;
+      vertical-align:middle;
+      font-size:50pt;
+    }
+  </style>
+<head>
+<body onload="changeSlide(0)">
+<div class="base" id="slide">
+</div>
+</body>
+</html>
