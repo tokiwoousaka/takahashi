@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title></title>
+  <script type="text/javascript">
+    var Slide = ##Presentation
+
+    var SlideIndex = 0;
+
+    function changeSlide(index){
+      if(0 > index || index >= Slide.length) return;
+
+      var slide = document.getElementById("slide");
+      SlideIndex = index;
+      slide.innerHTML = Slide[SlideIndex];
+    }
+
+    document.onkeydown = function(e){
+      if(e.keyCode == 39) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37) changeSlide(SlideIndex - 1);
+    }
+  </script>
+  <style>
+    .base {
+      width:100%; 
+      height:100%; 
+      text-align:center; 
+      display:table;
+    }
+    .slide {
+      display:table-cell;
+      vertical-align:middle;
+      font-size:50pt;
+    }
+  </style>
+<head>
+<body onload="changeSlide(0)">
+<div class="base" id="slide">
+</div>
+</body>
+</html>
