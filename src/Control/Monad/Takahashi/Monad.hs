@@ -5,20 +5,26 @@ module Control.Monad.Takahashi.Monad where
 import Control.Monad.Operational.Simple
 import Control.Monad.State.Class(MonadState(..))
 
-type HeaderLevel = Int
 data DrawType
+
+data DivInfo o = DivInfo 
+  { divRatio :: Int
+  , divData :: Takahashi o ()
+  }
 
 data TakahashiBase o a where
   GetOption :: TakahashiBase o o
   PutOption :: o -> TakahashiBase o ()
-  WriteHeader :: HeaderLevel -> String -> TakahashiBase o ()
+  WriteHeader1 :: String -> TakahashiBase o ()
+  WriteHeader2 :: String -> TakahashiBase o ()
+  WriteHeader3 :: String -> TakahashiBase o ()
   WriteParagraph :: [String] -> TakahashiBase o ()
   WriteList :: [String] -> TakahashiBase o ()
-  DrawPicture :: DrawType -> TakahashiBase o ()
-  VerticalDiv :: [Int] -> TakahashiBase o ()
-  HorizonDiv :: [Int] -> TakahashiBase o ()
+  DrawPicture :: DrawType -> String -> TakahashiBase o ()
+  VerticalDiv :: [DivInfo o] -> TakahashiBase o ()
+  HorizonDiv :: [DivInfo o] -> TakahashiBase o ()
 
-type Takahashi b = Program (TakahashiBase b)
+type Takahashi o = Program (TakahashiBase o)
 
 instance MonadState x (Takahashi x) where
   put = putOption
@@ -32,8 +38,14 @@ getOption = singleton GetOption
 putOption :: o -> Takahashi o ()
 putOption v = singleton $ PutOption v
 
-writeHeader :: HeaderLevel -> String -> Takahashi o ()
-writeHeader h s = singleton $ WriteHeader h s
+writeHeader1 :: String -> Takahashi o ()
+writeHeader1 s = singleton $ WriteHeader1 s
+
+writeHeader2 :: String -> Takahashi o ()
+writeHeader2 s = singleton $ WriteHeader2 s
+
+writeHeader3 :: String -> Takahashi o ()
+writeHeader3 s = singleton $ WriteHeader3 s
 
 writeParagraph :: [String] -> Takahashi o ()
 writeParagraph ss = singleton $ WriteParagraph ss
@@ -41,12 +53,12 @@ writeParagraph ss = singleton $ WriteParagraph ss
 writeList :: [String] -> Takahashi o ()
 writeList ss = singleton $ WriteList ss
 
-drawPicture :: DrawType -> Takahashi o ()
-drawPicture t = singleton $ DrawPicture t
+drawPicture :: DrawType -> String -> Takahashi o ()
+drawPicture t fp = singleton $ DrawPicture t fp
 
-verticalDiv :: [Int] -> Takahashi o ()
+verticalDiv :: [DivInfo o] -> Takahashi o ()
 verticalDiv xs = singleton $ VerticalDiv xs
 
-horizonDiv :: [Int] -> Takahashi o ()
+horizonDiv :: [DivInfo o] -> Takahashi o ()
 horizonDiv xs = singleton $ HorizonDiv xs
 
