@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell, RankNTypes #-}
-module Control.Monad.Takahashi.Style where
+module Control.Monad.Takahashi.HtmlBuilder.Style where
 import Control.Lens
 import Control.Monad.State
 
