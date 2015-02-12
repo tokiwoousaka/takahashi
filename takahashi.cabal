@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                takahashi
-version:             0.2.0.0
+version:             0.2.0.1
 synopsis:            library for takahashi method.
 description:         create slide as takahashi method.
 license:             MIT
@@ -23,9 +23,8 @@ library
                        Control.Monad.Takahashi.HtmlBuilder, 
                        Control.Monad.Takahashi.Monad,
                        Control.Monad.Takahashi.Slide,
-                       Control.Monad.Takahashi.Util,
-                       Paths_takahashi
-  -- other-modules:       
+                       Control.Monad.Takahashi.Util
+  other-modules:       Paths_takahashi   
   build-depends:       base >=4.6 && <5, 
                        free-operational >=0.5, 
                        mtl >=2.1,

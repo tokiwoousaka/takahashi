@@ -5,22 +5,37 @@ module Control.Monad.Takahashi
   , takaCont
   , parCont
   , listCont
+  , takaCont2
+  , parCont2
+  , listCont2
   , horizonCont
   , verticalCont
   , annotationCont
   , imgCont
   , codeCont
   , titleCont
+  , twinTopCont
+  , twinBottomCont
+  , twinLeftCont
+  , twinRightCont
   ----
   , title
   , taka
   , par
   , list
+  , taka2
+  , par2
+  , list2
   , horizon
   , vertical
   , annotation
   , img
   , code
+  , code2
+  , twinTop
+  , twinBottom
+  , twinLeft
+  , twinRight
   ----
   , makePage
   ------
@@ -29,7 +44,7 @@ module Control.Monad.Takahashi
   , fontColor, bgColor, frameColor, frameStyle
   , SlideOption
   , slideTitle, slideFontSize, titleOption, codeOption
-  , contentsOption, annotationOption, blockFontSize
+  , contentsOption, contentsOption2, annotationOption, blockFontSize
   , defaultSlideOption
   ----
   , Taka(..) 
@@ -47,7 +62,9 @@ module Control.Monad.Takahashi
   , bindPage
   ------
   -- from Control.Monad.Takahashi.HtmlBuilder
+  , Color(..)
   , DrawType(..)
+  , BorderStyle(..)
   ------
   -- from Control.Monad.Takahashi.Util
   , stateSandbox
@@ -63,20 +80,23 @@ import Control.Monad.Takahashi.Util
 ----
 -- Contents
 
-emptyCont :: Contents
-emptyCont = Contents $ \_ -> return ()
-
 takaCont :: String -> Contents
-takaCont s = Contents $ 
-  \option -> central (makeContentsStyle option) $ writeHeader1 s
+takaCont = takaContBase makeContentsStyle
 
 listCont :: [String] -> Contents
-listCont xs = Contents $ 
-  \option -> contents (basicContents option) $ writeList xs
+listCont = listContBase basicContents
 
 parCont :: String -> Contents
-parCont s = Contents $ 
-  \option -> contents (basicContents option) $ writeParagraph s
+parCont = parContBase basicContents
+
+takaCont2 :: String -> Contents
+takaCont2 = takaContBase makeContentsStyle2
+
+listCont2 :: [String] -> Contents
+listCont2 = listContBase basicContents2
+
+parCont2 :: String -> Contents
+parCont2 = parContBase basicContents2
 
 imgCont :: DrawType -> String -> Contents
 imgCont dt fp = Contents $
@@ -131,8 +151,6 @@ titleCont t s = Contents $
   \option -> central (makeTitleStyle option) $ do
     writeHeader1 t
     writeParagraph s
-  
-
 ----
 
 subTitlePage :: String -> Contents -> Contents
@@ -153,6 +171,18 @@ subTitlePage s p = Contents $ \option -> do
       }
     ]
 
+takaContBase :: (SlideOption -> MakeStyle ()) -> String -> Contents
+takaContBase m s = Contents $ 
+  \option -> central (m option) $ writeHeader1 s
+
+listContBase :: (SlideOption -> MakeStyle ()) -> [String] -> Contents
+listContBase m xs = Contents $ 
+  \option -> contents (m option) $ writeList xs
+
+parContBase :: (SlideOption -> MakeStyle ()) -> String -> Contents
+parContBase m s = Contents $ 
+  \option -> contents (m option) $ writeParagraph s
+
 ----
 -- slides
 
@@ -168,6 +198,15 @@ list xs = makePage $ listCont xs
 par :: String -> Taka ()
 par s = makePage $ parCont s
 
+taka2 :: String -> Taka ()
+taka2 s = makePage $ takaCont2 s
+
+list2 :: [String] -> Taka ()
+list2 xs = makePage $ listCont2 xs
+
+par2 :: String -> Taka ()
+par2 s = makePage $ parCont2 s
+
 horizon :: [Contents] -> Taka ()
 horizon ps = makePage $ horizonCont ps
 
@@ -182,6 +221,9 @@ img dt s = makePage $ imgCont dt s
 
 code :: String -> String -> Taka ()
 code s c = twinBottom (parCont s) (codeCont c)
+
+code2 :: String -> String -> Taka ()
+code2 s c = twinBottom (parCont2 s) (codeCont c)
 
 twinTop :: Contents -> Contents -> Taka ()
 twinTop c1 c2 = makePage $ twinTopCont c1 c2
@@ -215,10 +257,15 @@ basicContents o = do
   makeContentsStyle o
   setPadding
 
+basicContents2 :: SlideOption -> MakeStyle ()
+basicContents2 o = do
+  makeContentsStyle2 o
+  setPadding
+
 codeContents :: SlideOption -> MakeStyle ()
 codeContents o = do
   makeCodeStyle o
-  setPadding
+  margin.paddingLeft .= Just (Per 8)
 
 setPadding :: MakeStyle ()
 setPadding = do
@@ -228,17 +275,17 @@ setPadding = do
 makeTwinCont :: ([DivInfo Style] -> HBuilder ()) 
   -> Int -> Int -> Contents -> Contents -> Contents
 makeTwinCont builder i1 i2 c1 c2 = Contents $ \option -> do
-    builder
-      [ divInfo
-          { divRatio = i1
-          , divData = do
-              display .= Just Table
-              extructHBuilder c1 option
-          }
-      , divInfo
-          { divRatio = i2
-          , divData = do
-              display .= Just Table
-              extructHBuilder c2 option
-          }
-      ]
+  builder
+    [ divInfo
+        { divRatio = i1
+        , divData = do
+            display .= Just Table
+            extructHBuilder c1 option
+        }
+    , divInfo
+        { divRatio = i2
+        , divData = do
+            display .= Just Table
+            extructHBuilder c2 option
+        }
+    ]

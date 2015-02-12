@@ -2,11 +2,11 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE GADTs #-}
 module Control.Monad.Takahashi.Slide 
-  ( BlockOption
+  ( BlockOption(..)
   , fontColor, bgColor, frameColor, frameStyle
-  , SlideOption
+  , SlideOption(..)
   , slideTitle, slideFontSize, titleOption, codeOption
-  , contentsOption, annotationOption, blockFontSize
+  , contentsOption, contentsOption2, annotationOption, blockFontSize
   , defaultSlideOption
   ----
   , Taka(..) 
@@ -20,6 +20,7 @@ module Control.Monad.Takahashi.Slide
   , makeSlide 
   , makeTitleStyle
   , makeContentsStyle
+  , makeContentsStyle2
   , makeAnnotationStyle
   , makeCodeStyle
   ----
@@ -52,6 +53,7 @@ data SlideOption = SlideOption
   , _slideFontSize :: Maybe Int
   , _titleOption :: BlockOption
   , _contentsOption :: BlockOption
+  , _contentsOption2 :: BlockOption
   , _annotationOption :: BlockOption
   , _codeOption :: BlockOption
   } deriving (Show, Read, Eq, Ord)
@@ -73,6 +75,13 @@ defaultSlideOption = SlideOption
   , _contentsOption = BlockOption
     { _fontColor = Just $ Color 0 0 80
     , _bgColor = Just $ Color 200 200 255
+    , _frameColor = Just $ Color 255 255 255
+    , _frameStyle = Just BorderSolid
+    , _blockFontSize = Nothing
+    }
+  , _contentsOption2 = BlockOption
+    { _fontColor = Just $ Color 80 0 0
+    , _bgColor = Just $ Color 255 200 200 
     , _frameColor = Just $ Color 255 255 255
     , _frameStyle = Just BorderSolid
     , _blockFontSize = Nothing
@@ -139,11 +148,15 @@ writeSlide w = makeSlide >=> writeFile w
 
 ------
 -- helper 
+
 makeTitleStyle :: SlideOption -> MakeStyle ()
 makeTitleStyle = makeBlockStyle titleOption
 
 makeContentsStyle :: SlideOption -> MakeStyle ()
 makeContentsStyle = makeBlockStyle contentsOption
+
+makeContentsStyle2 :: SlideOption -> MakeStyle ()
+makeContentsStyle2 = makeBlockStyle contentsOption2
 
 makeAnnotationStyle :: SlideOption -> MakeStyle ()
 makeAnnotationStyle = makeBlockStyle annotationOption
@@ -151,6 +164,7 @@ makeAnnotationStyle = makeBlockStyle annotationOption
 makeCodeStyle :: SlideOption -> MakeStyle ()
 makeCodeStyle o = do
   makeBlockStyle codeOption o
+  align.verticalAlign .= Just AlignMiddle
   font.fontFamily .= Just [SensSelif, Monospace]
   font.whiteSpace .= Just Pre
 
