@@ -7,15 +7,14 @@ Takahashi Monad
 実際にしばらく運用して、作成スタイルをそのままに、もっと複雑なスライドを作成できると良いと考え、
 本格的なスライドも作りたいなーと思って大幅にバージョンアップしました。
 
-現段階で作成したスライドは、Choromeのみちゃんと表示されます。
+サンプル件、ドキュメントのスライド：  
+http://tokiwoousaka.github.io/takahashi/contents/20150213takahashi.html
 
-サンプルとかマニュアルはもう少々おまちください。
+上のスライドのソースコードです：  
+https://gist.github.com/tokiwoousaka/b854bc054f7620cc5059
 
 ## インストール
 
 ソースコードをダウンロードして、`cabal install`で出来る・・・はず。
 
-## 使い方
-
-マニュアル作成中
 
