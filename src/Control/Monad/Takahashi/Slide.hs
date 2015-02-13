@@ -38,7 +38,7 @@ import Paths_takahashi
 import Control.Monad.Takahashi.Monad
 import Control.Monad.Takahashi.HtmlBuilder
 import Control.Monad.Takahashi.Util
-import Control.Monad.Operational.Simple
+import Control.Monad.Operational
 
 data BlockOption = BlockOption
   { _fontColor :: Maybe Color

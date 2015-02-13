@@ -2,9 +2,9 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                takahashi
-version:             0.2.0.1
-synopsis:            library for takahashi method.
-description:         create slide as takahashi method.
+version:             0.2.0.2
+synopsis:            Operational Monad implementation. It is more small but adequately.
+description:         Just size Operational Monad implementation.
 license:             MIT
 license-file:        LICENSE
 author:              tokiwoousaka
@@ -26,7 +26,7 @@ library
                        Control.Monad.Takahashi.Util
   other-modules:       Paths_takahashi   
   build-depends:       base >=4.6 && <5, 
-                       free-operational >=0.5, 
+                       reasonable-operational >=0.1, 
                        mtl >=2.1,
                        reasonable-lens >=0.2.1
   hs-source-dirs:      src

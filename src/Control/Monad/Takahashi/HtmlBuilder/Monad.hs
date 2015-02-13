@@ -2,7 +2,7 @@
 {-# LANGUAGE MultiParamTypeClasses, TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
 module Control.Monad.Takahashi.HtmlBuilder.Monad where
-import Control.Monad.Operational.Simple
+import Control.Monad.Operational
 import Control.Monad.State.Class(MonadState(..))
 import Control.Monad.Takahashi.HtmlBuilder.Style
 import Control.Monad.Writer
@@ -37,7 +37,7 @@ data HtmlBuilderBase o a where
   HorizonDiv :: [DivInfo o] -> HtmlBuilderBase o ()
   WriteHtml :: Html -> HtmlBuilderBase o ()
 
-type HtmlBuilder o = Program (HtmlBuilderBase o)
+type HtmlBuilder o = Program (HtmlBuilderBase o) 
 
 instance MonadState x (HtmlBuilder x) where
   put = putHtmlOption

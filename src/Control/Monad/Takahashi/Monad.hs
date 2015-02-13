@@ -2,7 +2,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 module Control.Monad.Takahashi.Monad where
-import Control.Monad.Operational.Simple
+import Control.Monad.Operational
 import Control.Monad.State.Class(MonadState(..))
 
 import Control.Monad.Takahashi.HtmlBuilder
