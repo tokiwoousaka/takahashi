@@ -3,8 +3,8 @@
 
 name:                takahashi
 version:             0.2.0.2
-synopsis:            Operational Monad implementation. It is more small but adequately.
-description:         Just size Operational Monad implementation.
+description:         library for create slide for your presentation.
+synopsis:            create slide for presentation.
 license:             MIT
 license-file:        LICENSE
 author:              tokiwoousaka
