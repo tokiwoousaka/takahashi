@@ -48,7 +48,7 @@ data Len = Per Int | Px Int deriving (Show, Read, Eq, Ord)
 data Color = Color Integer Integer Integer deriving (Show, Read, Eq, Ord)
 data BorderStyle = BorderNone | BorderSolid | BorderDouble deriving (Show, Read, Eq, Ord)
 data BoxSizing = ContentsBox | BorderBox  deriving (Show, Read, Eq, Ord)
-data FontFamily = FontName String | Monospace | Selif | SensSelif deriving (Show, Read, Eq, Ord)
+data FontFamily = FontName String | Monospace | Selif | SansSelif deriving (Show, Read, Eq, Ord)
 data WhiteSpace = Normal | Pre deriving (Show, Read, Eq, Ord)
 
 data Margin = Margin 
@@ -202,7 +202,7 @@ showStyle style = intercalate ";" . filter (/="") $
           FontName s -> "'" ++ s ++ "'"
           Monospace -> "monospace"
           Selif -> "selif"
-          SensSelif -> "sens-selif"
+          SansSelif -> "sans-selif"
 
       showWhiteSpace x
         = case x of

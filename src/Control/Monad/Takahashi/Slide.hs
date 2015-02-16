@@ -165,7 +165,13 @@ makeCodeStyle :: SlideOption -> MakeStyle ()
 makeCodeStyle o = do
   makeBlockStyle codeOption o
   align.verticalAlign .= Just AlignMiddle
-  font.fontFamily .= Just [SensSelif, Monospace]
+  font.fontFamily .= Just 
+    [ FontName "Consolas"
+    , FontName "Liberation Mono"
+    , FontName "Menlo"
+    , FontName "Courier"
+    , Monospace
+    ]
   font.whiteSpace .= Just Pre
 
 makeBlockStyle :: Getter SlideOption BlockOption -> SlideOption -> MakeStyle ()
