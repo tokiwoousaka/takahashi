@@ -48,7 +48,6 @@ module Control.Monad.Takahashi
   , defaultSlideOption
   ----
   , Taka(..) 
-  , buildTakahashi
   , writeSlide
   ----
   , runTakahashi
