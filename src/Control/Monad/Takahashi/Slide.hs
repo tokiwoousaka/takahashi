@@ -33,85 +33,21 @@ module Control.Monad.Takahashi.Slide
 import Control.Lens
 import Control.Monad.RWS
 import Data.List
-import Paths_takahashi
+--import Paths_takahashi TODO
 
 import Control.Monad.Takahashi.Monad
 import Control.Monad.Takahashi.HtmlBuilder
 import Control.Monad.Takahashi.Util
 import Control.Monad.Operational
 
-data BlockOption = BlockOption
-  { _fontColor :: Maybe Color
-  , _bgColor :: Maybe Color
-  , _frameColor :: Maybe Color
-  , _frameStyle :: Maybe BorderStyle
-  , _blockFontSize :: Maybe Int
-  } deriving (Show, Read, Eq, Ord)
-
-data SlideOption = SlideOption 
-  { _slideTitle :: String
-  , _slideFontSize :: Maybe Int
-  , _titleOption :: BlockOption
-  , _contentsOption :: BlockOption
-  , _contentsOption2 :: BlockOption
-  , _annotationOption :: BlockOption
-  , _codeOption :: BlockOption
-  } deriving (Show, Read, Eq, Ord)
-
-makeLenses ''BlockOption
-makeLenses ''SlideOption
-
-defaultSlideOption :: SlideOption
-defaultSlideOption = SlideOption
-  { _slideTitle = ""
-  , _slideFontSize = Nothing
-  , _titleOption = BlockOption
-    { _fontColor = Just $ Color 0 0 80
-    , _bgColor = Just $ Color 100 100 255
-    , _frameColor = Just $ Color 0 0 80
-    , _frameStyle = Just BorderSolid
-    , _blockFontSize = Nothing
-    }
-  , _contentsOption = BlockOption
-    { _fontColor = Just $ Color 0 0 80
-    , _bgColor = Just $ Color 200 200 255
-    , _frameColor = Just $ Color 255 255 255
-    , _frameStyle = Just BorderSolid
-    , _blockFontSize = Nothing
-    }
-  , _contentsOption2 = BlockOption
-    { _fontColor = Just $ Color 80 0 0
-    , _bgColor = Just $ Color 255 200 200 
-    , _frameColor = Just $ Color 255 255 255
-    , _frameStyle = Just BorderSolid
-    , _blockFontSize = Nothing
-    }
-  , _annotationOption = BlockOption
-    { _fontColor = Just $ Color 255 0 0
-    , _bgColor = Nothing
-    , _frameColor = Just $ Color 255 255 255
-    , _frameStyle = Nothing
-    , _blockFontSize = Nothing
-    }
-  , _codeOption = BlockOption
-    { _fontColor = Just $ Color 0 0 80
-    , _bgColor = Nothing
-    , _frameColor = Just $ Color 0 0 80
-    , _frameStyle = Just BorderDouble
-    , _blockFontSize = Nothing
-    }
-  }
-
 type TakahashiRWS a = RWS () Html SlideOption a
 
 ----
 
-type Taka a = Takahashi SlideOption a
-
 buildTakahashi :: Taka a -> TakahashiRWS a
 buildTakahashi t = interpret advent t
   where
-    advent :: TakahashiBase SlideOption a -> TakahashiRWS a
+    advent :: TakahashiBase a -> TakahashiRWS a
     advent GetSlideOption = get
     advent (PutSlideOption o) = put o
     advent (Slide t) = do
@@ -138,7 +74,7 @@ makeSlideWithTemplate r t = do
   return $ sub "##Presentation" (showTakahashi t) instr
 
 makeSlide :: Taka a -> IO String
-makeSlide t = getDataFileName "html/Temp.html" >>= flip makeSlideWithTemplate t
+makeSlide t = undefined --getDataFileName "html/Temp.html" >>= flip makeSlideWithTemplate t TODO
 
 writeSlideWithTemplate :: String -> String -> Taka a -> IO ()
 writeSlideWithTemplate r w = makeSlideWithTemplate r >=> writeFile w
@@ -224,4 +160,3 @@ bindPage :: Contents -> Taka ()
 bindPage p = do
   o <- get
   slide . extructHBuilder p $ o
-
