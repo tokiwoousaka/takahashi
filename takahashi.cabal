@@ -23,7 +23,8 @@ library
                        Control.Monad.Takahashi.HtmlBuilder, 
                        Control.Monad.Takahashi.Monad,
                        Control.Monad.Takahashi.Slide,
-                       Control.Monad.Takahashi.Util
+                       Control.Monad.Takahashi.Util,
+                       Control.Monad.Takahashi.API
   other-modules:       Paths_takahashi
   build-depends:       base >=4.6 && <5, 
                        reasonable-operational >=0.1, 

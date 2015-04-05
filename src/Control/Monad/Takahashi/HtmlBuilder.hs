@@ -96,3 +96,5 @@ drawType2Style dt = execMakeStyle defaultStyle (drawType2MakeStyle dt)
     drawType2MakeStyle Stretch = do
       size.height .= Just (Per 90)
       size.width .= Just (Per 90)
+
+
