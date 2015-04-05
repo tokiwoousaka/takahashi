@@ -28,6 +28,11 @@
       if(e.keyCode == 39) changeSlide(SlideIndex + 1);
       if(e.keyCode == 37) changeSlide(SlideIndex - 1);
     }
+
+    document.onclick = function(e){
+      if(e.clientX > (window.screen.width / 3 * 2)) changeSlide(SlideIndex + 1);
+      if(e.clientX < (window.screen.width / 3)) changeSlide(SlideIndex - 1);
+    }
   </script>
   <style>
     html, body {
