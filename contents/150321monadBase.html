@@ -33,13 +33,23 @@
 
     var startX = undefined;
 
-    function onPointEnd(x){
+    function onPointJudge(x, moving){
       if(startX == undefined) return;
       var yardstick = window.screen.width / 10;
+      var moved = false;
 
-      if(startX < x && startX + yardstick < x) changeSlide(SlideIndex + 1)
-      if(x < startX && x < startX - yardstick) changeSlide(SlideIndex - 1)
-      startX = undefined;
+      if(startX < x && startX + yardstick < x) {
+        changeSlide(SlideIndex + 1);
+        moved = true;
+      }
+      else if(x < startX && x < startX - yardstick) {
+        changeSlide(SlideIndex - 1);
+        moved = true;
+      } 
+      
+      if(moved || !moving) {
+        startX = undefined;
+      } 
     }
 
     function onPointStart(x){
@@ -51,16 +61,15 @@
     }
 
     document.onmouseup = function(e){
-      onPointEnd(e.clientX);
+      onPointJudge(e.clientX, false);
     }
 
     document.ontouchstart = function(e){
        onPointStart(e.changedTouches[0].pageX);
     }
 
-    document.ontouchend = function(e){
-       //alert(startX + " - " + e.changedTouches[0].pageX);
-       alert("hoge");
+    document.ontouchmove = function(e){
+       onPointJudge(e.changedTouches[0].pageX, true);
     }
   </script>
   <style>
