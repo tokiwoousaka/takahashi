@@ -47,7 +47,7 @@
     }
 
     document.onmousedown = function(e){
-      onPointdown(e.clientX);
+      onPointdown(e.originalEvent.changedTouches[0].pageX);
     }
 
     document.onmouseup = function(e){
