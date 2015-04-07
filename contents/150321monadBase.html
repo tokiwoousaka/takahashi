@@ -31,47 +31,19 @@
 
     // -----
 
-    var startX = undefined;
-
-    function onPointJudge(x, moving){
-      if(startX == undefined) return;
-      var yardstick = window.screen.width / 10;
-      var moved = false;
-
-      if(startX < x && startX + yardstick < x) {
-        changeSlide(SlideIndex + 1);
-        moved = true;
-      }
-      else if(x < startX && x < startX - yardstick) {
-        changeSlide(SlideIndex - 1);
-        moved = true;
-      } 
-      
-      if(moved || !moving) {
-        startX = undefined;
-      } 
+    function judgeMoveSlide(x){
+      if(x > (window.screen.width / 3 * 2)) changeSlide(SlideIndex + 1);
+      if(x < (window.screen.width / 3)) changeSlide(SlideIndex - 1);
     }
 
-    function onPointStart(x){
-      startX = x;
-    }
-
-    document.onmousedown = function(e){
-      onPointStart(e.clientX);
-    }
-
-    document.onmouseup = function(e){
-      onPointJudge(e.clientX, false);
+    document.onclick = function(e){
+      judgeMoveSlide(e.clientX);
     }
 
     document.ontouchstart = function(e){
-       onPointStart(e.changedTouches[0].pageX);
+      judgeMoveSlide(e.changedTouches[0].pageX);
     }
 
-    document.ontouchmove = function(e){
-       document.title(Math.random());
-       onPointJudge(e.changedTouches[0].pageX, true);
-    }
   </script>
   <style>
     html, body {
