@@ -32,7 +32,6 @@
     // -----
 
     function judgeMoveSlide(x){
-      alert(x + "," + window.screen.width);
       if(x > (window.innerWidth / 3 * 2)) changeSlide(SlideIndex + 1);
       if(x < (window.innerWidth / 3)) changeSlide(SlideIndex - 1);
     }
