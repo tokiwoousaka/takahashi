@@ -40,7 +40,7 @@
       judgeMoveSlide(e.clientX);
     }
 
-    document.ontouchstart = function(e){
+    document.ontouchend = function(e){
       judgeMoveSlide(e.changedTouches[0].pageX);
     }
 
