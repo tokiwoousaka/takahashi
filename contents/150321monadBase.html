@@ -25,13 +25,37 @@
     }
 
     document.onkeydown = function(e){
-      if(e.keyCode == 39) changeSlide(SlideIndex + 1);
-      if(e.keyCode == 37) changeSlide(SlideIndex - 1);
+      if(e.keyCode == 39) changeSlide(SlideIndex - 1);
+      if(e.keyCode == 37) changeSlide(SlideIndex + 1);
     }
 
-    document.onclick = function(e){
-      if(e.clientX > (window.screen.width / 3 * 2)) changeSlide(SlideIndex + 1);
-      if(e.clientX < (window.screen.width / 3)) changeSlide(SlideIndex - 1);
+    // -----
+
+    var downX = undefined;
+
+    function onPointUp(x){
+      if(downX == undefined) return;
+      var yardstick = window.screen.width / 10;
+
+      if(downX < x && downX + yardstick < x) changeSlide(SlideIndex + 1)
+      if(x < downX && x < downX - yardstick) changeSlide(SlideIndex - 1)
+      downX = undefined;
+    }
+
+    function onPointdown(x){
+      downX = x;
+    }
+
+    document.onmousedown = function(e){
+      onPointdown(e.clientX);
+    }
+
+    document.onmouseup = function(e){
+      onPointUp(e.clientX);
+    }
+
+    document.ontouchstart = function(e){
+       alert(e.pageX);
     }
   </script>
   <style>
