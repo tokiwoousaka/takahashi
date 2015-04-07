@@ -69,6 +69,7 @@
     }
 
     document.ontouchmove = function(e){
+       document.title(Math.random());
        onPointJudge(e.changedTouches[0].pageX, true);
     }
   </script>
