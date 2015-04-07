@@ -28,6 +28,18 @@
       if(e.keyCode == 39) changeSlide(SlideIndex + 1);
       if(e.keyCode == 37) changeSlide(SlideIndex - 1);
     }
+
+    // -----
+
+    function judgeMoveSlide(x){
+      if(x > (window.innerWidth / 3 * 2)) changeSlide(SlideIndex + 1);
+      if(x < (window.innerWidth / 3)) changeSlide(SlideIndex - 1);
+    }
+
+    document.ontouchend = function(e){
+      judgeMoveSlide(e.changedTouches[0].pageX);
+    }
+
   </script>
   <style>
     html, body {
