@@ -36,13 +36,9 @@
       if(x < (window.innerWidth / 3)) changeSlide(SlideIndex - 1);
     }
 
-    document.onclick = function(e){
-      judgeMoveSlide(e.clientX);
+    document.ontouchend = function(e){
+      judgeMoveSlide(e.changedTouches[0].pageX);
     }
-
-    //document.ontouchend = function(e){
-    //  judgeMoveSlide(e.changedTouches[0].pageX);
-    //}
 
   </script>
   <style>
