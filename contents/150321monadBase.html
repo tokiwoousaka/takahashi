@@ -31,31 +31,35 @@
 
     // -----
 
-    var downX = undefined;
+    var startX = undefined;
 
-    function onPointUp(x){
-      if(downX == undefined) return;
+    function onPointEnd(x){
+      if(startX == undefined) return;
       var yardstick = window.screen.width / 10;
 
-      if(downX < x && downX + yardstick < x) changeSlide(SlideIndex + 1)
-      if(x < downX && x < downX - yardstick) changeSlide(SlideIndex - 1)
-      downX = undefined;
+      if(startX < x && startX + yardstick < x) changeSlide(SlideIndex + 1)
+      if(x < startX && x < startX - yardstick) changeSlide(SlideIndex - 1)
+      startX = undefined;
     }
 
-    function onPointdown(x){
-      downX = x;
+    function onPointStart(x){
+      startX = x;
     }
 
     document.onmousedown = function(e){
-      onPointdown(e.clientX);
+      onPointStart(e.clientX);
     }
 
     document.onmouseup = function(e){
-      onPointUp(e.clientX);
+      onPointEnd(e.clientX);
     }
 
     document.ontouchstart = function(e){
-       alert(e.changedTouches[0].pageX);
+       onPointStart(e.changedTouches[0].pageX);
+    }
+
+    document.ontouchend = function(e){
+       onPointStart(e.changedTouches[0].pageX);
     }
   </script>
   <style>
