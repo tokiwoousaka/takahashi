@@ -47,7 +47,7 @@
     }
 
     document.onmousedown = function(e){
-      onPointdown(e.originalEvent.changedTouches[0].pageX);
+      onPointdown(e.clientX);
     }
 
     document.onmouseup = function(e){
@@ -55,7 +55,7 @@
     }
 
     document.ontouchstart = function(e){
-       alert("Hoge");
+       alert(e.originalEvent.changedTouches[0].pageX);
     }
   </script>
   <style>
