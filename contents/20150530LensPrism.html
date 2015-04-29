@@ -1,0 +1,57 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript">
+    var SlideList = []
+    var SlideIndex = 0;
+    var Title = "Slide";
+
+    function init(){
+      SlideList = document.getElementsByName("pages");
+      changeSlide(0);
+    }
+
+    function changeSlide(index){
+      if(0 > index || index >= SlideList.length) return;
+      for(i = 0; i < SlideList.length ;i++) {
+        if(i == index) {
+          SlideList[i].style.display = "table-cell";
+          document.title = Title + " - " + (i + 1) + "/" + SlideList.length;
+        } else {
+          SlideList[i].style.display = "none";
+        }
+      }
+      SlideIndex = index;
+    }
+
+    document.onkeydown = function(e){
+      if(e.keyCode == 39) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37) changeSlide(SlideIndex - 1);
+    }
+  </script>
+  <style>
+    html, body {
+      height: 98%;
+      width: 99%; 
+      overflow:hidden;
+    }
+    h1, h2, h3, ul, p {
+      margin:0px; 
+      padding:0px;
+    }
+    .slide {
+      font-size:45pt;
+      display:inline-table; 
+      width:100%; 
+      height:100%; 
+    }
+  </style>
+<head>
+<body onload="init()" style="height:100%">
+  <div class="slide">
+
+<div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;background:#c8c8c8;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>Prismの合成</h1></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>Prismの合成</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>PrismもLensと同様、関数合成によって合成出来ます。</p></div></div></div><div class="block" style="height:66%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;vertical-align:middle;display:table-cell;font-size:30px;color:#000000;padding-left:8%;border-width:10;border-style:double;border-color:#000000;box-sizing:border-box;font-family:sens-selif,monospace;white-space:pre"><p>let justLeft = Just (Left 5) :: Maybe (Either Int String)<br />let justRight = Just (Right "Hello") :: Maybe (Either Int String)<br /><br />justLeft^?_Just._Left   -- Just 5<br />justLeft^?_Just._Right  -- Nothing<br />justRight^?_Just._Right -- Just "Hello"<br />justRight^._Just._Right -- "Hello"</p></div></div></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>Prismの合成</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>仮に、PrismとLensを組み合わせて合成しても、<br />もちろんアクセッサとしても利用できます。</p></div></div></div><div class="block" style="height:66%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;vertical-align:middle;display:table-cell;font-size:30px;color:#000000;padding-left:8%;border-width:10;border-style:double;border-color:#000000;box-sizing:border-box;font-family:sens-selif,monospace;white-space:pre"><p>let foo = (1, Left (999, 3), 4) <br />    :: (Int, Either (Int, Int) String, Int)<br />let bar = (1, Right "Test", 4) <br />    :: (Int, Either (Int, Int) String, Int)<br /><br />print $ foo^?_2._Left._1     -- Just 999<br />print $ foo&_2._Left._1.~111 -- (1,Left (111,3),4) <br />print $ bar^?_2._Right       -- Just "Test"<br />print $ bar^._2._Rightn      -- "Test"</p></div></div></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>Prismの合成</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:50%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>一度でもLensと合成したアクセッサに対して、<br />re関数を使う事は出来ませんが、Prism同士を合成したアクセッサは、<br />re関数に適用出来ます。</p></div></div></div><div class="block" style="height:50%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;vertical-align:middle;display:table-cell;font-size:30px;color:#000000;padding-left:8%;border-width:10;border-style:double;border-color:#000000;box-sizing:border-box;font-family:sens-selif,monospace;white-space:pre"><p>  re (_Just._1)                 -- NG<br /><br />  (100^.re (_Just._Left) <br />    :: Maybe (Either Int Int))  -- OK Just (Left 100)</p></div></div></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>Prismの合成</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:50%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>re関数を使って作成したPrismアクセッサを合成したものと、<br />Prismアクセッサを合成したものをre関数に適用した場合では、<br />結果の構造が逆になるため、注意してください。</p></div></div></div><div class="block" style="height:50%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;vertical-align:middle;display:table-cell;font-size:30px;color:#000000;padding-left:8%;border-width:10;border-style:double;border-color:#000000;box-sizing:border-box;font-family:sens-selif,monospace;white-space:pre"><p>print $ (100^.re _Just.re _Left<br />  :: Either (Maybe Int) Int)  -- Left (Just 100) <br /><br />print $ (100^.re (_Just._Left)<br />  :: Maybe (Either Int Int))  -- Just (Left 100)</p></div></div></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>Prismの合成</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>ここまで、ざっくりとPrismの使い方を説明しました。</p></div></div></div></div><div name="pages" style="font-size:40px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>ありがとうございました<br />m(_ _)m</h1></div></div></div>
+
+  </div>
+</body>
+</html>
