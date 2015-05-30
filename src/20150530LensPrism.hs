@@ -13,13 +13,13 @@ presentation = do
   setOptions
 
   ---- Lensの基本
-  --stateSandbox $ do  
-  --  title "LensでHaskellを\nもっと格好良く！" 
-  --    $  "2015/5/30 Lens&Prism勉強会\n"
-  --    ++ "by ちゅーん(@its_out_of_tune)"
-  --slideTitle .= "自己紹介"
-  --profile
-  --header "HaskellのLens" abountLens
+  stateSandbox $ do  
+    title "LensでHaskellを\nもっと格好良く！" 
+      $  "2015/5/30 Lens&Prism勉強会\n"
+      ++ "by ちゅーん(@its_out_of_tune)"
+  slideTitle .= "自己紹介"
+  profile
+  header "HaskellのLens" abountLens
 
   ---- Optic/Lens/Prism
   stateSandbox $ do  
@@ -27,15 +27,16 @@ presentation = do
     title "Opticから見たLens/Prism" 
       $  "2015/5/30 Lens&Prism勉強会\n"
       ++ "by ちゅーん(@its_out_of_tune)"
-  --header "Lensの限界" lensLimit
-  --header "Prismでパターンマッチ" prismPatternMuch
-  --header "Prismの合成" prismCoposition
-  --header "State上のPrism" prismWithState
+  header "Lensの限界" lensLimit
+  header "Prismでパターンマッチ" prismPatternMuch
+  header "Prismの合成" prismCoposition
+  header "State上のPrism" prismWithState
   header "色々なFunctor" anyFunctor
-  --header "LensからOpticへ" $ return ()
-  --header "Prismの仕組み" $ return ()
-  --header "Opticで全体を見渡す" $ return ()
-  --header "おまけ" $ return () --圏論の話をちょっとする
+  header "Lens, Optic, Prism" lens2Optic
+  header "Opticで全体を見渡す" overlookWithOptic
+  header "Prismの原理" prismDetail
+  header "まとめ" summary
+  --header "おまけ" aboutCategory
 
   -- end
   slideTitle .= ""
@@ -161,7 +162,7 @@ lensLimit = do
     par
       $  "lensは便利だけど\n"
       ++ "直和型が混ざると使えない\n\n"
-      ++ "　-> そこでPrimsを使おう！"
+      ++ "　　　　　　-> Primsを使おう！"
 
 --------
 -- prismPatternMuch
@@ -214,7 +215,7 @@ prismPatternMuch = do
   twinTop
     ( parCont
       $  "Prismはre関数を使う事によって、\n"
-      ++ "データコンストラクタを被せるアクセッサになる。\n"
+      ++ "データコンストラクタを被せるGetterになる。\n"
       ++ "値をSetする事は出来ない。\n\n"
       ++ "同様の事は、to関数を使っても実現可能。"
     )
@@ -341,19 +342,17 @@ prismWithState = do
 
 anyFunctor :: Taka ()
 anyFunctor = do
-  vertical
-    [ parCont
+  twinBottom
+    ( parCont
       $  "Functorのイメージ：\n"
       ++ "　実用上の認識に囚われない方が良い。"
-    , parCont2
-      $  "Functorの図式"
-    ]
-  vertical
-    [ parCont
+    )
+    ( imgCont WStretch "../img/LensPrism/_functor.png" )
+  twinBottom
+    ( parCont
       $  "持ち上げ先の矢印を逆にする"
-    , parCont2
-      $  "Contravariantの図式"
-    ]
+    )
+    ( imgCont WStretch "../img/LensPrism/_contravariant.png" )
   vertical
     [ parCont
       $  "FunctorとContravariant"
@@ -386,23 +385,23 @@ anyFunctor = do
       ++ "instance Contravariant (Const r) where\n"
       ++ "  contramap _ = Const . getConst\n"
     ]
-  vertical
-    [ parCont
+  twinBottom
+    ( parCont
       $  "２つの関数を一つに束ねる"
-    , parCont2
-      $  "Bifunctorの図式"
-    ]
-  vertical
-    [ parCont
+    )
+    ( imgCont WStretch "../img/LensPrism/_bifunctor.png" )
+  twinBottom
+    ( parCont
       $  "Bifunctor"
-    , codeCont
+    )
+    ( codeCont
       $  "class Bifunctor f where\n"
       ++ "  bimap :: (a -> b) -> (c -> d) -> f a c -> f b d\n\n"
       ++ "  first :: (a -> b) -> f a c -> f b c\n"
       ++ "  first f = bimap f id\n\n"
       ++ "  second :: (b -> c) -> f a b -> f a c\n"
       ++ "  second f = bimap id f"
-    ]
+    )
   vertical
     [ parCont
       $  "Bifunctorの例：タプル、Const 等"
@@ -412,9 +411,578 @@ anyFunctor = do
       ++ "instance Bifunctor Const  where\n"
       ++ "  bimap f _ (Const x) = Const $ f x"
     ]
+  twinBottom
+    ( parCont
+      $  "Bifunctorの矢印を片方だけ反転"
+    )
+    ( imgCont WStretch "../img/LensPrism/_profunctor.png" )
+  twinBottom
+    ( parCont
+      $  "Profunctor"
+    )
+    ( codeCont
+      $  "class Profunctor p where\n"
+      ++ "  dimap :: (c -> a) -> (b -> d) -> p a b -> p c d\n\n"
+      ++ "  lmap :: (a -> b) -> p b c -> p a c\n"
+      ++ "  lmap f = dimap f id\n\n"
+      ++ "  rmap :: (b -> c) -> p a b -> p a c\n"
+      ++ "  rmap = dimap id\n"
+    )
+  twinBottom
+    ( parCont
+      $  "矢印で表せるような、合成可能な構造は、\n"
+      ++ "Profunctorになり得る。"
+    )
+    ( imgCont WStretch "../img/LensPrism/_profunctor2.png" )
+
+--------
+-- lens2Optic
+
+lens2Optic :: Taka ()
+lens2Optic = do 
+  vertical
+    [ parCont
+      $  "Lensの定義を再掲"
+    , codeCont
+      $  "type Lens s t a b\n"
+      ++ "  = forall f. Functor f => (a -> f b) -> s f t"
+    ]
+  vertical
+    [ parCont
+      $  "Functorの制約を外す"
+    , codeCont
+      $  "type LensLike f s t a b = (a -> f b) -> s -> f t"
+    , parCont
+      $  "これ以上の多相化は出来ない？"
+    ]
+  vertical
+    [ takaCont
+      $  "シンキング・タイム(10秒)"
+    , codeCont
+      $  "type LensLike f s t a b = (a -> f b) -> s -> f t"
+    , parCont
+      $  "まだ抽象化出来る？"
+    ]
+  vertical
+    [ parCont
+      $  "Haskellでは関数も型コンストラクタ"
+    , codeCont
+      $  "type LensLike f s t a b = (->) a (f b) -> (->) s (f t)\n"
+      ++ "type Optic p f s t a b  = p    a (f b) -> p    s (f t)"
+    , parCont
+      $  "合成出来るように中央の(->)は残しておく"
+    ]
+  vertical
+    [ parCont
+      $  "Prismの定義"
+    , codeCont
+      $  "type Prism s t a b = forall p f. \n"
+      ++ "  (Choice p, Applicative f) => p a (f b) -> p s (f t)"
+    ]
+  twinBottom
+    ( parCont
+      $  "Choice型クラス？\n"
+      ++ "後でまた詳しく説明します。"
+    )
+    ( codeCont
+      $  "class Profunctor p => Choice p where\n"
+      ++ "  left' :: p a b -> p (Either a c) (Either b c)\n"
+      ++ "  left' = dimap (either Right Left) (either Right Left) . right'\n\n"
+      ++ "  right' :: p a b -> p (Either c a) (Either c b)\n"
+      ++ "  right' = dimap (either Right Left) (either Right Left) . left'\n\n"
+      ++ "instance Choice (->) where\n"
+      ++ "  left' f (Left x) = Left $ f x\n"
+      ++ "  left' _ (Right x) = Right x\n"
+    )
+  vertical
+    [ parCont
+      $  "LensもPrismもOpticで表現出来る。"
+    , codeCont
+      $  "type Lens s t a b\n"
+      ++ "  = forall f. Functor f                   => Optic (->) f s t a b\n\n"
+      ++ "type Prism s t a b \n"
+      ++ "  = forall p f. (Choice p, Applicative f) => Optic p    f s t a b\n"
+    ]
+  vertical
+    [ parCont
+      $  "実際のlensライブラリでは、\n"
+      ++ "Opticをさらに多相にしたOpticalも定義されている"
+    , codeCont
+      $  "type Optical p q f s t a b = p a (f b) -> q s (f t)\n"
+      ++ "type Optic p f s t a b = Optical p p f s t a b"
+    ]
+
+--------
+-- overlookWithOptic 
+
+overlookWithOptic :: Taka ()
+overlookWithOptic = do 
+  vertical
+    [ parCont
+      $  "ekmett/lensのアクセサはすべて、\n"
+      ++ "Optic型に属し、(.)で合成出来る"
+    , codeCont
+      $  "type Optic p f s t a b = p a (f b) -> p s (f t)"
+    , parCont
+      $  "pとfに様々な制約を与える事で\n"
+      ++ "様々なアクセッサを、体系的に扱う。"
+    ]
+  list
+    [ "Opticベースのlensなら・・・\n\n"
+    , "合成について明示的に定義しなくて良い"
+    , "lensモジュールに依存せずにアクセサを提供できる"
+    , "Haskellの文法に適した記法が得られる"
+    , "定式化／分析がしやすそう"
+    , "恋人が出来る"
+    , "お金持ちになれる"
+    , "etc.. etc.."
+    ]
+  twinBottom
+    ( parCont 
+      $  "ekmett/lensに定義されている、\n"
+      ++ "Lensの仲間をざっと見ていこう。"
+    )
+    ( imgCont WStretch "../img/LensPrism/_lensfrends.png")
+  vertical
+    [ parCont
+      $  "Equalityは、\n"
+      ++ "pとfに任意の型を取れるようにしたもの。\n"
+      ++ "a=b, s=tを表す。（つまり何も変換出来ない）"
+    , codeCont
+      $  "type Equality s t a b = forall p f. )ptic p f s t a b\n"
+      ++ "type Equality' s a = Equality s s a )\n\n"
+      ++ "id :: Equality a b a b\n"
+      ++ "   :: forall p f. p a (f b) -> p a (f b)\n"
+    ]
+  vertical
+    [ parCont
+      $  "同型を表すIsoは、以下のように定義される。"
+    , codeCont
+      $  "type Iso s t a b \n"
+      ++ "  = forall p f. (Profunctor p, Functor f) => Optic p f s t a b\n"
+      ++ "type Iso' s a = Iso s s a a"
+    , parCont
+      $  "s=a, t=bでGetterになるため\n"
+      ++ "通常Iso'の方を使う事になる。"
+    ]
+  vertical
+    [ parCont
+      $  "iso関数を使えば簡単にIsoが作れるが、\n"
+      ++ "変換が同型射である事は実装者が保証する。"
+    , codeCont
+      $  "iso :: (s -> a) -> (b -> t) -> Iso s t a b\n"
+      ++ "iso f g = dimap f (fmap g)\n\n"
+      ++ "boolMaybe :: Iso' Bool (Maybe ())\n"
+      ++ "boolMaybe = iso bm mb\n"
+      ++ "  where\n"
+      ++ "   bm :: Bool -> Maybe ()\n"
+      ++ "   mb :: Maybe () -> Bool"
+    ]
+  twinBottom
+    ( parCont
+      $  "from関数はIsoの向きを逆にする。\n"
+      ++ "尚、ExchangeはProfunctor、IsoはAnIsoになる。"
+    )
+    ( codeCont
+      $  "data Exchange a b s t = Exchange (s -> a) (b -> t)\n"
+      ++ "instance Profunctor (Exchange a b) where\n"
+      ++ "  dimap f g (Exchange h i) = Exchange (h . f) (g . i)\n\n"
+      ++ "type AnIso s t a b = Optic (Exchange a b) Identity s t a b\n\n"
+      ++ "from :: AnIso s t a b -> Iso b a t s\n"
+    )
+  vertical
+    [ parCont
+      $  "IsoをGetterとして使う例。\n"
+      ++ "もちろん、問題なくSetterにもなる。"
+    , codeCont
+      $  "(True, 10)^._1.boolMaybe         -- Just ()\n"
+      ++ "(False, 10)^._1.boolMaybe        -- Nothing\n"
+      ++ "(Just (), 10)^._1.from boolMaybe -- True\n"
+      ++ "(Nothing, 10)^._1.from boolMaybe -- False"
+    ]
+  vertical
+    [ parCont
+      $  "Isoのp::Profunctorを(->)に固定するとLens。\n"
+      ++ "p::ProfunctorをChoiceにし、\n"
+      ++ "f::FunctorをApplicativeにすればPrismになる。"
+    , codeCont
+      $  "type Lens s t a b\n"
+      ++ "  = forall f. Functor f                   => Optic (->) f s t a b\n\n"
+      ++ "type Prism s t a b \n"
+      ++ "  = forall p f. (Choice p, Applicative f) => Optic p    f s t a b\n"
+    ]
+  vertical
+    [ parCont
+      $  "Prismから、a=t, f=bとして、\n"
+      ++ "pにBifunctor制約を追加、fの制約をSettableに"
+    , codeCont
+      $  "type Review t b = forall p f. \n"
+      ++ "  (Choice p, Bifunctor p, Settable f) => Optic p f t t b b"
+    , parCont
+      $  "尚、Settableは要Functor（後述）なので、\n"
+      ++ "PrismはReviewになる。"
+    ]
+  vertical
+    [ parCont
+      $  "TaggedはChoiceでありBifunctor\n"
+      ++ "かつIdentityはSettableなので、\n"
+      ++ "ReviewはAReviewになる、PrismもAReview"
+    , codeCont
+      $  "newtype Tagged t a = ... \n"
+      ++ "instance Bifunctor Tagged where\n"
+      ++ "instance Choice Tagged where\n"
+      ++ "instance Settable Identity where\n\n"
+      ++ "type AReview t b = Optic' Tagged Identity t b\n"
+    ]
+  vertical
+    [ parCont
+      $  "Reviewを扱う関数。\n"
+      ++ "可能な限り多相化されてるのでわかりづらい。"
+    , codeCont
+      $  "unto :: (Profunctor p, Bifunctor p, Functor f) \n"
+      ++ "    => (b -> t) -> Optic p f s t a b\n"
+      ++ "un :: (Profunctor p, Bifunctor p, Functor f) \n"
+      ++ "    => Getting a s a -> Optic p f a a s s\n"
+      ++ "re :: Contravariant f => AReview t b -> LensLike f b b t t"
+    ]
+  vertical
+    [ parCont
+      $  "だいたいこんな感じ"
+    , codeCont
+      $  "unto :: (b -> t) -> Review s t a b\n"
+      ++ "un :: Getter s a -> Review a a s s\n"
+      ++ "re :: Review t t b b -> Getter b t"
+    , parCont
+      $  "re関数でGetterに出来る。\n"
+      ++ "てか、Getterにしないと何もできない。"
+    ]
+  vertical
+    [ parCont
+      $  "やたら多相化されてるGetting/Getter"
+    , codeCont
+      $  "type Getting r s a = Optic (->) (Const r) s s a a \n"
+      ++ "type Getter s a = forall f. \n"
+      ++ "    (Functor f, Contravariant f) => Optic (->) f s s a a"
+    , parCont
+      $  "Const r は Contravariant（後述）なので、\n"
+      ++ "GettingはGetterになる。"
+    ]
+  vertical
+    [ parCont
+      $  "SetterはIdentityが多相化されていて、\n"
+      ++ "Settable型クラスになっている。"
+    , codeCont
+      $  "type Setter s t a b \n"
+      ++ "  = forall f. Settable f => Optic (->) f s t a b"
+    ]
+  vertical
+    [ parCont
+      $  "a=t, f=b に固定、"
+      ++ "fがContravariantかつApplicative"
+    , codeCont
+      $  "type Fold s a = forall f. \n"
+      ++ "    (Contravariant f, Applicative f) => Optic (->) f s s a a"
+    , parCont
+      $  "Getter, Traversalの制約を強くしたもの、\n"
+      ++ "当然、LensもPrismもFoldになる。"
+    ]
+  vertical
+    [ parCont
+      $  "以下の２つの演算子はFoldのためのもの。\n"
+      ++ "（(^..)の説明は割愛。）\n"
+    , codeCont
+      $  "(^..) :: s -> Getting (Endo [a]) s a -> [a]\n"
+      ++ "(^?) :: s -> Getting (First a) s a -> Maybe a"
+    , parCont
+      $  "Getting r s a の r に指定する型がモノイドなら\n"
+      ++ "その型はFoldになる（後述）"
+    ]
+
+--------
+-- overlookWithOptic 
+
+prismDetail :: Taka ()
+prismDetail = do
+  list
+    [ "lensライブラリは巨大＆複雑"
+    , "すべての機能を把握するのは超大変"
+    , "よく使うところから少しづつ掘り下げていこう" , "今回はPrism周りの仕組みを解説"
+    ]
+  twinBottom
+    ( parCont
+      $  "まずは、ChoiceとPrismを再掲"
+    )
+    ( codeCont
+      $  "class Profunctor p => Choice p where\n"
+      ++ "  left' :: p a b -> p (Either a c) (Either b c)\n"
+      ++ "  left' = dimap (either Right Left) (either Right Left) . right'\n\n"
+      ++ "  right' :: p a b -> p (Either c a) (Either c b)\n"
+      ++ "  right' = dimap (either Right Left) (either Right Left) . left'\n\n"
+      ++ "type Prism s t a b = forall p f. \n"
+      ++ "    (Choice p, Applicative f) => Optic p f s t a b"
+    )
+  vertical
+    [ parCont
+      $  "Choiceの二大インスタンス\n"
+      ++ "その１：関数"
+    , codeCont
+      $  "instance Choice (->) where\n"
+      ++ "  left' f (Left x) = Left $ f x\n"
+      ++ "  left' _ (Right x) = Right x"
+    ]
+  vertical
+    [ parCont
+      $  "Choiceの二大インスタンス\n"
+      ++ "その２：Tagged" 
+    , codeCont
+      $  "newtype Tagged t a = Tagged { unTagged :: a } \n\n"
+      ++ "instance Bifunctor Tagged where\n"
+      ++ "  bimap _ f = Tagged . f . unTagged\n"
+      ++ "instance Profunctor Tagged where\n"
+      ++ "  dimap _ f = Tagged . f . unTagged\n"
+      ++ "instance Choice Tagged where\n"
+      ++ "  right' = Tagged . Right . unTagged"
+    ]
+  twinBottom
+    ( parCont
+      $  "ChoiceはProfunctorに別の変換を与える。\n"
+      ++ "ちなみに、足し算はEitherを表す（圏論の慣習）"
+    )
+    ( imgCont WStretch "../img/LensPrism/_choice.png" )
+  vertical
+    [ parCont
+      $  "Prismを作るためのprism関数\n"
+      ++ "dimapとright\'で順同型射からPrismを作れる"
+    , codeCont
+      $  "prism :: (b -> t) -> (s -> Either t a) -> Prism s t a b\n"
+      ++ "prism bt seta = dimap seta (either pure $ fmap bt) . right'\n\n"
+      ++ "_Just :: Prism (Maybe a) (Maybe b) a b\n"
+      ++ "_Just = prism Just $ \\case\n"
+      ++ "  Just x -> Right x\n"
+      ++ "  Nothing -> Left $ Nothing\n"
+    ]
+  vertical
+    [ parCont
+      $  "Setterの場合、over関数のタイミングで、\n"
+      ++ "Optic p f s t a b の f が Identityに固定される"
+    , codeCont
+      $  "over :: Setter s t a b -> (a -> b) -> s -> t\n"
+      ++ "over l f = getIdentity . l (Identity . f)\n\n"
+      ++ "set :: Setter s t a b -> b -> s -> t\n"
+      ++ "set a = over a . const\n\n"
+      ++ "(.~) = set\n"
+    ]
+  vertical
+    [ parCont
+      $  "改めて、Setterの型と比較。"
+    , codeCont
+      $  "type Setter s t a b \n"
+      ++ "  = forall f. Settable f => Optic (->) f s t a b\n"
+      ++ "type Prism s t a b = forall p f. \n"
+      ++ "    (Choice p, Applicative f) => Optic p f s t a b"
+    , parCont
+      $  "関数はChoiceのインスタンスなので問題なし\n"
+      ++ "Settableってなんだ。"
+    ]
+  vertical
+    [ parCont
+      $  "実はよくわかってない(´・ω・｀)\n\n"
+      ++ "けどIdentityはSettableのインスタンスなので、\n"
+      ++ "pureとuntaintedがあればover相当の関数は作れるはず。"
+    , codeCont
+      $  "class Functor g => Distributive g where\n"
+      ++ "  distribute :: Functor f => f (g a) -> g (f a)\n"
+      ++ "class (Applicative f\n"
+      ++ "  , Distributive f, Traversable f) => Settable f where\n"
+      ++ "  untainted :: f a -> a\n\n"
+      ++ "instance Settable Identity where\n"
+      ++ "  untainted = getIdentity"
+    ]
+  twinBottom
+    ( parCont
+      $  "Prismアクセッサの動作を簡単にチェックしたい。\n"
+      ++ "次のような型を作ってみよう。"
+    )
+    ( codeCont
+      $  "data Hoge = Foo String | Bar Int | Buz String deriving Show\n\n"
+      ++ "_Foo :: Prism Hoge Hoge String String\n"
+      ++ "_Foo = prism Foo $ \\case\n"
+      ++ "  Foo s -> Right s\n"
+      ++ "  x -> Left x\n\n"
+      ++ "_Bar :: Prism Hoge Hoge Int Int\n"
+      ++ "_Buz :: Prism Hoge Hoge String String\n"
+    )
+  vertical
+    [ parCont
+      $  "f を Identityに固定する事で、\n"
+      ++ "パターンにマッチした場合のみmap出来る事を、\n"
+      ++ "次のようにして確認できる。"
+    , codeCont
+      $  "ghci> getIdentity . _Foo (Identity . (++\"Piyo\")) $ Foo \"Hoge\"\n"
+      ++ "Foo \"HogePiyo\"\n"
+      ++ "ghci> getIdentity . _Foo (Identity . (++\"Piyo\")) $ Bar 114514\n"
+      ++ "Bar 114514\n"
+      ++ "ghci> getIdentity . _Foo (Identity . (++\"Piyo\")) $ Buz \"Hoge\"\n"
+      ++ "Buz \"Hoge\"\n"
+    ]
+  twinBottom
+    ( parCont
+      $  "以下のように図に描くとわかりやすい。\n"
+      ++ "profunctor や f の型を固定して考えてみよう。"
+    )
+    ( imgCont WStretch "../img/LensPrism/_prism.png" )
+  twinBottom
+    ( parCont
+      $  "Getterとして使う場合\n"
+      ++ "Const r は Applicativeでない事に注意"
+    )
+    ( codeCont
+      $  "type Prism s t a b = \n"
+      ++ "    forall p f. (Choice p, Applicative f) => Optic p f s t a b\n\n"
+      ++ "type Getting r s a = Optic' (->) (Const r) s a \n\n"
+      ++ "foldOf :: Getting a s a -> s -> a\n"
+      ++ "foldOf l = getConst . l Const\n\n"
+      ++ "(^.) = flip foldOf\n"
+    )
+  vertical
+    [ parCont
+      $  "ただし、Gettingのrがモノイドの場合に限り、\n"
+      ++ "Const rがApplicativeになる。"
+    , codeCont
+      $  "type Getting r s a = Optic' (->) (Const r) s a \n\n"
+      ++ "instance Monoid m => Applicative (Const m) where\n"
+      ++ "  pure x = Const mempty\n"
+      ++ "  (<*>) _ = Const . getConst"
+    ]
+  vertical
+    [ parCont
+      $  "prism関数の定義を再掲"
+    , codeCont
+      $  "prism :: (b -> t) -> (s -> Either t a) -> Prism s t a b\n"
+      ++ "prism bt seta = dimap seta (either pure $ fmap bt) . right'\n\n"
+    , parCont
+      $  "マッチング出来ない場合は、\n"
+      ++ "pureの部分でmemptyが取得される。"
+    ]
+  vertical
+    [ parCont
+      $  "Foldとして使う場合\n"
+      ++ "ConstはContravariantになるので、\n"
+      ++ "あとはFirst aがモノイドであればFoldになりそう。"
+    , codeCont
+      $  "type Fold s a = forall f. \n"
+      ++ "    (Contravariant f, Applicative f) => Optic' (->) f s a\n"
+      ++ "type Getting r s a = Optic' (->) (Const r) s a \n\n"
+      ++ "(^?) :: s -> Getting (First a) s a -> Maybe a\n"
+    ]
+  vertical
+    [ parCont
+      $  "FirstはMaybeと同型、\n"
+      ++ "MaybeはMonoidになる。"
+    , codeCont
+      $  "newtype First a = First { getFirst :: Maybe a }\n\n"
+      ++ "instance Monoid (First a) where\n"
+      ++ "  mempty = First Nothing\n"
+      ++ "  r@(First (Just )) `mappend` _  = r\n"
+      ++ "  First Nothing `mappend` r = r\n"
+    ]
+  vertical
+    [ parCont
+      $  "後はだいたいGetterの理屈と一緒\n"
+      ++ "AccessingはGettingの変形"
+    , codeCont
+      $  "type Accessing p m s a = Optical p (->) (Const m) s s a a\n\n"
+      ++ "foldMapOf :: Profunctor p => Accessing p r s a -> p a r -> s -> r\n"
+      ++ "foldMapOf l f = getConst . l (Const #. f)\n\n"
+      ++ "(^?) :: s -> Getting (First a) s a -> Maybe a\n"
+      ++ "s ^? l = getFirst $ foldMapOf l (First #. Just) s\n"
+    ]
+  vertical
+    [ parCont
+      $  "re関数の実装、ようやくTagged登場\n"
+      ++ "TaggedはChoice、IdentityはApplicativeの、\n"
+      ++ "それぞれインスタンスなのでPrismはAReview"
+    , codeCont
+      $  "re :: Contravariant f => AReview t b -> LensLike f b b t t\n"
+      ++ "re p = to (getIdentity #. unTagged #. p .# Tagged .# Identity)\n\n"
+      ++ "newtype Tagged t a = Tagged { unTagged :: a }\n"
+      ++ "type AReview t b = Optic' Tagged Identity t b\n"
+    ]
+  twinBottom
+    ( parCont
+      $  "prismの図を再掲、\n"
+      ++ "re関数の動作原理を考えてみよう。"
+    )
+    ( imgCont WStretch "../img/LensPrism/_prism.png" )
+  vertical
+    [ parCont
+      $  "直接コンストラクタを被せるのは、\n"
+      ++ "簡単に試す事ができる。\n\n"
+      ++ "純粋な関数になれば、to関数でGetterに出来る。"
+    , codeCont
+      $  "ghci> :t _Just $ Tagged (Identity 10)\n"
+      ++ "_Just $ Tagged (Identity 10)\n"
+      ++ "  :: Num b => Tagged (Maybe a) (Identity (Maybe b))\n"
+      ++ "ghci> getIdentity . unTagged . _Just $ Tagged (Identity 10)\n"
+      ++ "Just 10\n"
+      ++ "ghci> getIdentity . unTagged . _Foo $ Tagged (Identity \"Hoge\")\n"
+      ++ "Foo \"Hoge\"\n"
+    ]
+  twinBottom
+    ( parCont
+      $  "reの実装は関数合成でも同じはず\n"
+      ++ "(´・ω・｀)あれ？"
+    )
+    ( codeCont
+      $  "--これでも良いはず\n"
+      ++ "re :: Contravariant f => AReview t b -> LensLike f b b t t\n"
+      ++ "re p = to (getIdentity . unTagged . p . Tagged . Identity)\n\n"
+      ++ "--実際\n"
+      ++ "re :: Contravariant f => AReview t b -> LensLike f b b t t\n"
+      ++ "re p = to (getIdentity #. unTagged #. p .# Tagged .# Identity)\n"
+      ++ "--                     ^           ^     ^         ^\n"
+      ++ "--                     why profunctor??"
+    )
+  twinBottom
+    ( parCont
+      $  "Prismはただ単に順同型を表すので、\n"
+      ++ "パターンマッチの用途に囚われず使える。"
+    ) 
+    ( codeCont
+      $  "nat :: Prism' Integer Natural\n"
+      ++ "nat = prism toInteger \n"
+      ++ "  $ \\i -> if i < 0 then Left i else Right (fromInteger i)\n\n"
+      ++ "5^?nat                   -- Just 5  :: Maybe Natural\n"
+      ++ "(-5)^?nat                -- Nothing :: Maybe Natural\n"
+      ++ "(10 :: Natural)^.re nat  -- 10      :: Integer"
+    )
+
+--------
+-- summary
+
+summary :: Taka ()
+summary = do
+  list
+    [ "Lensは便利"
+    , "でも直和型には弱い"
+    , "そんな時にはPrism！"
+    , "LensもPrismもOpticで表せるよ"
+    , "Opticでekmett/lens全体を見渡せる"
+    , "Prismの原理を覗いてみたよ"
+    , "Lens/Prismちょーすげぇ！"
+    ]
+  taka "てなわけで"
+  taka "みんな\nLensを使おう！"
+
+--------
+-- aboutCategory
+
+aboutCategory :: Taka ()
+aboutCategory = do
+  return ()
 
 -------------------------------------------------
--- helper
+-- helper 
 
 setOptions :: Taka ()
 setOptions = do
