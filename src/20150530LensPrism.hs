@@ -347,12 +347,12 @@ anyFunctor = do
       $  "Functorのイメージ：\n"
       ++ "　実用上の認識に囚われない方が良い。"
     )
-    ( imgCont WStretch "../img/LensPrism/_functor.png" )
+    ( imgCont WStretch "../img/LensPrism/ufunctor.png" )
   twinBottom
     ( parCont
       $  "持ち上げ先の矢印を逆にする"
     )
-    ( imgCont WStretch "../img/LensPrism/_contravariant.png" )
+    ( imgCont WStretch "../img/LensPrism/ucontravariant.png" )
   vertical
     [ parCont
       $  "FunctorとContravariant"
@@ -389,7 +389,7 @@ anyFunctor = do
     ( parCont
       $  "２つの関数を一つに束ねる"
     )
-    ( imgCont WStretch "../img/LensPrism/_bifunctor.png" )
+    ( imgCont WStretch "../img/LensPrism/ubifunctor.png" )
   twinBottom
     ( parCont
       $  "Bifunctor"
@@ -415,7 +415,7 @@ anyFunctor = do
     ( parCont
       $  "Bifunctorの矢印を片方だけ反転"
     )
-    ( imgCont WStretch "../img/LensPrism/_profunctor.png" )
+    ( imgCont WStretch "../img/LensPrism/uprofunctor.png" )
   twinBottom
     ( parCont
       $  "Profunctor"
@@ -433,7 +433,7 @@ anyFunctor = do
       $  "矢印で表せるような、合成可能な構造は、\n"
       ++ "Profunctorになり得る。"
     )
-    ( imgCont WStretch "../img/LensPrism/_profunctor2.png" )
+    ( imgCont WStretch "../img/LensPrism/uprofunctor2.png" )
 
 --------
 -- lens2Optic
@@ -542,7 +542,7 @@ overlookWithOptic = do
       $  "ekmett/lensに定義されている、\n"
       ++ "Lensの仲間をざっと見ていこう。"
     )
-    ( imgCont WStretch "../img/LensPrism/_lensfrends.png")
+    ( imgCont WStretch "../img/LensPrism/ulensfrends.png")
   vertical
     [ parCont
       $  "Equalityは、\n"
@@ -748,7 +748,7 @@ prismDetail = do
       $  "ChoiceはProfunctorに別の変換を与える。\n"
       ++ "ちなみに、足し算はEitherを表す（圏論の慣習）"
     )
-    ( imgCont WStretch "../img/LensPrism/_choice.png" )
+    ( imgCont WStretch "../img/LensPrism/uchoice.png" )
   vertical
     [ parCont
       $  "Prismを作るためのprism関数\n"
@@ -830,7 +830,7 @@ prismDetail = do
       $  "以下のように図に描くとわかりやすい。\n"
       ++ "profunctor や f の型を固定して考えてみよう。"
     )
-    ( imgCont WStretch "../img/LensPrism/_prism.png" )
+    ( imgCont WStretch "../img/LensPrism/uprism.png" )
   twinBottom
     ( parCont
       $  "Getterとして使う場合\n"
@@ -913,7 +913,7 @@ prismDetail = do
       $  "prismの図を再掲、\n"
       ++ "re関数の動作原理を考えてみよう。"
     )
-    ( imgCont WStretch "../img/LensPrism/_prism.png" )
+    ( imgCont WStretch "../img/LensPrism/uprism.png" )
   vertical
     [ parCont
       $  "直接コンストラクタを被せるのは、\n"
