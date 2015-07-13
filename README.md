@@ -13,9 +13,17 @@ http://tokiwoousaka.github.io/takahashi/contents/20150213takahashi.html
 上のスライドのソースコードです：  
 https://gist.github.com/tokiwoousaka/b854bc054f7620cc5059
 
-## インストール
+## インストール方法
 
-Hackageからインストールしたい場合は、
+stackを利用する事で、安全にインストールする事ができます。
+
+詳しい方法は書いてるのでちょっと待っててね。
+
+## 旧バージョンのインストール
+
+※ この方法は最近のGHCでは動作しない可能性があります
+
+Hackageにアップロード済の古いものをインストールする場合は、
 
 ```
 $ cabal install takahashi
