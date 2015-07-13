@@ -1,0 +1,6 @@
+flags: {}
+packages:
+- '.'
+extra-deps: 
+- monad-skeleton-0.1.2.1
+resolver: lts-2.18

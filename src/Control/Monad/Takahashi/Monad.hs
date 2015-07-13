@@ -4,7 +4,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 module Control.Monad.Takahashi.Monad where
 import Control.Lens
-import Control.Monad.Operational
+import Control.Monad.Skeleton
 import Control.Monad.State.Class(MonadState(..))
 
 import Control.Monad.Takahashi.HtmlBuilder
@@ -14,7 +14,7 @@ data TakahashiBase a where
   PutSlideOption :: SlideOption -> TakahashiBase ()
   Slide :: HtmlBuilder Style () -> TakahashiBase ()
 
-type Taka = Program TakahashiBase
+type Taka = Skeleton TakahashiBase
 
 instance MonadState SlideOption Taka where
   put = putSlideOption
@@ -23,13 +23,13 @@ instance MonadState SlideOption Taka where
 ----
 
 getSlideOption :: Taka SlideOption
-getSlideOption = singleton GetSlideOption
+getSlideOption = bone GetSlideOption
 
 putSlideOption :: SlideOption -> Taka ()
-putSlideOption v = singleton $ PutSlideOption v
+putSlideOption v = bone $ PutSlideOption v
 
 slide :: HtmlBuilder Style () -> Taka ()
-slide f = singleton $ Slide f
+slide f = bone $ Slide f
 
 ------
 -- slide options

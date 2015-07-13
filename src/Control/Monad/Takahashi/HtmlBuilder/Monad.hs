@@ -2,7 +2,7 @@
 {-# LANGUAGE MultiParamTypeClasses, TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
 module Control.Monad.Takahashi.HtmlBuilder.Monad where
-import Control.Monad.Operational
+import Control.Monad.Skeleton
 import Control.Monad.State.Class(MonadState(..))
 import Control.Monad.Takahashi.HtmlBuilder.Style
 import Control.Monad.Writer
@@ -37,7 +37,7 @@ data HtmlBuilderBase o a where
   HorizonDiv :: [DivInfo o] -> HtmlBuilderBase o ()
   WriteHtml :: Html -> HtmlBuilderBase o ()
 
-type HtmlBuilder o = Program (HtmlBuilderBase o) 
+type HtmlBuilder o = Skeleton (HtmlBuilderBase o) 
 
 instance MonadState x (HtmlBuilder x) where
   put = putHtmlOption
@@ -54,34 +54,34 @@ tuple2DivInfo (x, (y, z)) = DivInfo { divRatio = x, divMakeStyle = y, divData = 
 ----
 
 getHtmlOption :: HtmlBuilder o o
-getHtmlOption = singleton GetHtmlOption
+getHtmlOption = bone GetHtmlOption
 
 putHtmlOption :: o -> HtmlBuilder o ()
-putHtmlOption v = singleton $ PutHtmlOption v
+putHtmlOption v = bone $ PutHtmlOption v
 
 writeHeader1 :: String -> HtmlBuilder o ()
-writeHeader1 s = singleton $ WriteHeader1 s
+writeHeader1 s = bone $ WriteHeader1 s
 
 writeHeader2 :: String -> HtmlBuilder o ()
-writeHeader2 s = singleton $ WriteHeader2 s
+writeHeader2 s = bone $ WriteHeader2 s
 
 writeHeader3 :: String -> HtmlBuilder o ()
-writeHeader3 s = singleton $ WriteHeader3 s
+writeHeader3 s = bone $ WriteHeader3 s
 
 writeParagraph :: String -> HtmlBuilder o ()
-writeParagraph ss = singleton $ WriteParagraph ss
+writeParagraph ss = bone $ WriteParagraph ss
 
 writeList :: [String] -> HtmlBuilder o ()
-writeList ss = singleton $ WriteList ss
+writeList ss = bone $ WriteList ss
 
 drawPicture :: DrawType -> String -> HtmlBuilder o ()
-drawPicture t fp = singleton $ DrawPicture t fp
+drawPicture t fp = bone $ DrawPicture t fp
 
 verticalDiv :: [DivInfo o] -> HtmlBuilder o ()
-verticalDiv xs = singleton $ VerticalDiv xs
+verticalDiv xs = bone $ VerticalDiv xs
 
 horizonDiv :: [DivInfo o] -> HtmlBuilder o ()
-horizonDiv xs = singleton $ HorizonDiv xs
+horizonDiv xs = bone $ HorizonDiv xs
 
 writeHtml :: Html -> HtmlBuilder o ()
-writeHtml h = singleton $ WriteHtml h
+writeHtml h = bone $ WriteHtml h

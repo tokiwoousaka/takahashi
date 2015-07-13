@@ -26,8 +26,8 @@ library
                        Control.Monad.Takahashi.Util,
                        Control.Monad.Takahashi.API
   other-modules:       Paths_takahashi
-  build-depends:       base >=4.6 && <5, 
-                       reasonable-operational >=0.1, 
-                       mtl >=2.1,
-                       reasonable-lens >=0.2.1
+  build-depends:       base >=4.6 && <5 , 
+                       monad-skeleton,
+                       lens,
+                       mtl
   hs-source-dirs:      src

@@ -20,7 +20,7 @@ import Control.Monad.Takahashi.Util
 
 import Data.List
 import Data.Monoid
-import Control.Monad.Operational
+import Control.Monad.Skeleton
 import Control.Monad.RWS
 
 ----

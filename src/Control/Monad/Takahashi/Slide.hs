@@ -22,7 +22,7 @@ module Control.Monad.Takahashi.Slide
 import Control.Lens
 import Control.Monad.RWS
 import Data.List
-import Control.Monad.Operational
+import Control.Monad.Skeleton
 import Paths_takahashi 
 
 import Control.Monad.Takahashi.Monad
