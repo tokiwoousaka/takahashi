@@ -1,5 +1,4 @@
-module Main where
-import Control.Monad.Takahashi
+module Main where import Control.Monad.Takahashi
 import Control.Lens
 import Control.Monad.State
 import Control.Applicative
@@ -372,12 +371,6 @@ aboutDocumantation = do
       $  "Haskell版javadock的な"
     )
     ( codeCont "何処かからサンプルを拾って説明" )
-  twinBottom
-    ( parCont
-      $  "型が多くの情報を持つため、\n"
-      ++ "簡単な補足情報を書いてやるだけでかなり便利。"
-    )
-    ( imgCont WStretch "" )
   -- 結 : 型は静的に解析可能なドキュメント
   slideTitle .= "「型」"
   bigList
@@ -458,7 +451,7 @@ aboutProof = do
     ++ "２つのコードが等価な事を示せる。"
   big 
     $  "手計算での証明については、\n"
-    ++ "依然のダーニーさんのスライド参照。"
+    ++ "依然のダニーさんのスライド参照。"
   bigList
     [ "プログラムを書き換えられたらどうする？"
     , "「証明の正しさ」は誰が保証するの？"
@@ -486,21 +479,14 @@ aboutProof = do
       ++ "    | S n' => S (plus n' m)\n"
       ++ "  end."
     )
-  twinBottom
-    ( parCont
-      $  "Coqで同じようにして、\n"
-      ++ "自然数と足し算を定義。"
-    )
-    ( codeCont 
-      $  "Inductive nat : Type :=\n"
-      ++ "  | O : nat\n"
-      ++ "  | S : nat -> nat.\n\n"
-      ++ "Fixpoint plus (n : nat) (m : nat) : nat :=\n"
-      ++ "  match n with\n"
-      ++ "    | O => m\n"
-      ++ "    | S n' => S (plus n' m)\n"
-      ++ "  end."
-    )
+  vertical
+    [ parCont
+      $  "もちろん、実行出来ます。"
+    , codeCont
+      $  "Coq < Eval compute in (plus (S(S O)) (S(S(S O)))).\n"
+      ++ "     = S (S (S (S (S O))))\n"
+      ++ "     : nat"
+    ]
   twinBottom
     ( parCont
       $  "タクティクと呼ばれる命令を駆使して証明。\n"
