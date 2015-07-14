@@ -1,0 +1,9 @@
+flags: {}
+packages:
+- '.'
+- location:
+    git: git@github.com:tokiwoousaka/takahashi.git
+    commit: 360ae7510b8ff5ba17118adc673f812e468b4f3c
+extra-deps:
+- monad-skeleton-0.1.2.1
+resolver: lts-2.18
