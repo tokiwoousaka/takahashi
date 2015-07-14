@@ -15,13 +15,34 @@ https://gist.github.com/tokiwoousaka/b854bc054f7620cc5059
 
 ## インストール方法
 
-stackを利用する事で、安全にインストールする事ができます。
+stackを利用する事で、安全かつ簡単にインストールする事ができます。
+基本的な使い方は以下の記事を参照すると良いでしょう。
 
-詳しい方法は書いてるのでちょっと待っててね。
+http://qiita.com/tanakh/items/6866d0f570d0547df026  
+http://tune.hateblo.jp/entry/2015/07/13/034148
 
-## 旧バージョンのインストール
+対応しているsolverは`lts-2.18`です、詳細は以下のURLを参照してください。
 
-※ この方法は最近のGHCでは動作しない可能性があります
+https://www.stackage.org/lts-2.18
+
+`stack.yaml`を以下のとおりに設定し…
+
+```yaml
+flags: {}
+packages:
+- '.'
+extra-deps:
+- monad-skeleton-0.1.2.1
+- takahashi-0.2.2.0
+resolver: lts-2.18
+```
+
+`cabal`ファイルの`build-depends`に`takahashi`を設定する事によって、
+すぐに`Control.Monad.Takahashi`モジュールを使えるようになります。
+
+## cabalを使ってインストール
+
+※ この方法はGHCのバージョンによって動作しない可能性があります
 
 Hackageにアップロード済の古いものをインストールする場合は、
 
