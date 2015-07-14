@@ -25,8 +25,8 @@
     }
 
     document.onkeydown = function(e){
-      if(e.keyCode == 39) changeSlide(SlideIndex + 1);
-      if(e.keyCode == 37) changeSlide(SlideIndex - 1);
+      if(e.keyCode == 39 || e.keyCode == 34) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37 || e.keyCode == 33) changeSlide(SlideIndex - 1);
     }
 
     // -----
