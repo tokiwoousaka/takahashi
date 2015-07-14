@@ -1,6 +1,8 @@
 module Main where
-
 import Lib
 
 main :: IO ()
-main = someFunc
+main = do
+  day20150530LensPrism
+  day20150704tadashisa
+

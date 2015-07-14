@@ -1,12 +1,13 @@
-module Main where
+module Day20150530LensPrism(day20150530LensPrism) where
 import Control.Monad.Takahashi
 import Control.Lens
 import Control.Monad.State
 
-main :: IO ()
-main = do
-  writeSlide "../contents/20150530LensPrism.html" presentation
-  putStrLn "Sucess."
+day20150530LensPrism :: IO ()
+day20150530LensPrism = do
+  let fileName = "contents/20150530LensPrism.html"
+  writeSlide fileName presentation
+  putStrLn $ "Sucess : Output to '" ++ fileName ++ "'"
 
 presentation :: Taka ()
 presentation = do
