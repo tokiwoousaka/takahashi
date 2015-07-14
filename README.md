@@ -60,12 +60,3 @@ $ cabal install
 ```
 
 を実行する事で導入出来ます。
-もし、sandboxを使わずに導入した場合、
-`Control.Monad.Operational`や`Control.Lens`が他の同機能のライブラリと衝突する事があります、
-その場合、ghc-pkgでどちらかを`hide`するで対応してください。
-
-尚、本ライブラリは、LensおよびOperationalに、依存を最小限に抑えた小規模版を採用しています。
-
-http://hackage.haskell.org/package/reasonable-lens  
-http://hackage.haskell.org/package/reasonable-operational
-
