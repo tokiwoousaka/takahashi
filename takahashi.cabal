@@ -2,8 +2,9 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                takahashi
-version:             0.2.1.0
+version:             0.2.2.0
 description:         library for create slide for your presentation.
+                     when you install with stack, recommend solver is lts-2.18
 synopsis:            create slide for presentation.
 license:             MIT
 license-file:        LICENSE
@@ -26,7 +27,7 @@ library
                        Control.Monad.Takahashi.Util,
                        Control.Monad.Takahashi.API
   other-modules:       Paths_takahashi
-  build-depends:       base >=4.6 && <5 , 
+  build-depends:       base >=4.6 && <5, 
                        monad-skeleton,
                        lens,
                        mtl
