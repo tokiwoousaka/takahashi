@@ -15,10 +15,12 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     Common
                      , Day20150213takahashi
                      , Day20150530LensPrism
                      , Day20150704tadashisa
+                     , Day20150913objective
+                     , Lib
   build-depends:       base >= 4.7 && < 5
                      , takahashi
                      , mtl
