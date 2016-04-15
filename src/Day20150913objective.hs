@@ -1,4 +1,4 @@
-module Day20150913objective where
+module Day20150913objective(day20150913objective) where
 import Control.Monad.Takahashi
 import Control.Lens
 import Common
@@ -53,8 +53,7 @@ toBeginWith = do
   bigList
     [ "Haskellはすごい"
     , "でも状態を扱うのは苦手？"
-    , "そこでモナドですよ！\n\n"
-    , "モナドとか良くわからん(´・ω・｀)"
+    , "そこでモナドですよ！\n\n" , "モナドとか良くわからん(´・ω・｀)"
     ]
   slideTitle .= "モナドは手続き"
   big 

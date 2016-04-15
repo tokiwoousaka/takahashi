@@ -1,10 +1,10 @@
-module Main where
+module Bug02(bug02) where
 import Control.Monad.Takahashi
 import Control.Lens
 import Control.Monad.State
 
-main :: IO ()
-main = do
+bug02 :: IO ()
+bug02 = do
   writeSlide "../contents/Bug02_fix.html" presentation
   putStrLn "Sucess."
 

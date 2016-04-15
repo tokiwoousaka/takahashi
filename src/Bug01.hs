@@ -1,17 +1,17 @@
-module Main where
+module Bug01(bug01) where
 import Control.Monad.Takahashi
 import Control.Lens
 import Control.Monad.State
 
-main :: IO ()
-main = do
+bug01 :: IO ()
+bug01 = do
   writeSlide "../contents/Bug01.html" presentation
   putStrLn "Sucess."
 
 presentation :: Taka ()
 presentation = do
   slideTitle .= "ほげほげ"
-  stateSandbox $ do
+  --stateSandbox $ do
   twinLeft
     ( listCont
       [ "ぴよぴよ"

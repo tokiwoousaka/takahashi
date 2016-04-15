@@ -1,0 +1,69 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript">
+    var SlideList = []
+    var SlideIndex = 0;
+    var Title = "Slide";
+
+    function init(){
+      SlideList = document.getElementsByName("pages");
+      changeSlide(0);
+    }
+
+    function changeSlide(index){
+      if(0 > index || index >= SlideList.length) return;
+      for(i = 0; i < SlideList.length ;i++) {
+        if(i == index) {
+          SlideList[i].style.display = "table-cell";
+          document.title = Title + " - " + (i + 1) + "/" + SlideList.length;
+        } else {
+          SlideList[i].style.display = "none";
+        }
+      }
+      SlideIndex = index;
+    }
+
+    document.onkeydown = function(e){
+      if(e.keyCode == 39 || e.keyCode == 34) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37 || e.keyCode == 33) changeSlide(SlideIndex - 1);
+    }
+
+    // -----
+
+    function judgeMoveSlide(x){
+      if(x > (window.innerWidth / 3 * 2)) changeSlide(SlideIndex + 1);
+      if(x < (window.innerWidth / 3)) changeSlide(SlideIndex - 1);
+    }
+
+    document.ontouchend = function(e){
+      judgeMoveSlide(e.changedTouches[0].pageX);
+    }
+
+  </script>
+  <style>
+    html, body {
+      height: 98%;
+      width: 99%; 
+      overflow:hidden;
+    }
+    h1, h2, h3, ul, p {
+      margin:0px; 
+      padding:0px;
+    }
+    .slide {
+      font-size:45pt;
+      display:inline-table; 
+      width:100%; 
+      height:100%; 
+    }
+  </style>
+<head>
+<body onload="init()" style="height:100%">
+  <div class="slide">
+
+<div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><h1>Takahashi Monad</h1><p>2015/2/13 ちゅーん(@its_out_of_tune)<br />2015/2/15　更新<br /><br />→キーで次のページへ</p></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>自己紹介</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:66%;float:left"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>野生のHaskller(28♂)</li><li>春からなごやこわい<br /><br /></li><li>クルージング(スケボー)</li><li>ボルダリング<br /><br /></li><li>スプラトゥーン</li><li>当たらない方のチャージャー使い</li></ul></div></div></div><div class="block" style="height:100%;width:33%;float:left"><div class="block" style="height:50%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;position:absolute"><img src="../img/my_icon2.gif" style="width:90%"/></div></div></div><div class="block" style="height:50%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;font-size:40px;color:#000000;background:#c8c8c8;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>HN:　ちゅーん<br /><br />Twitter:<br />　@its_out_of_tune<br />Github:<br />　tokiwoousaka<br /></p></div></div></div></div><div style="clear:both"></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>自己紹介</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>Takahashi Monad：<br />　スライド作成用の言語内DSL<br />　本スライドもこれで作成<br /></li><li>Sarasvati：<br />　永遠に開発中のオーディオインターフェイス<br />　PortAudioのラッパーのラッパー<br /></li><li>ブログ：http://tune.hateblo.jp/<br />　ポーカーゲームを作る連載やってます</li></ul></div></div></div></div>
+
+  </div>
+</body>
+</html>
