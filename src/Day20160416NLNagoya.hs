@@ -5,7 +5,7 @@ import Common
 
 day20160416NLNagoya :: IO ()
 day20160416NLNagoya = do
-  let fileName = "contents/day20160416NLNagoya"
+  let fileName = "contents/day20160416NLNagoya.html"
   writeSlide fileName presentation
   putStrLn $ "Sucess : Output to '" ++ fileName ++ "'"
 
