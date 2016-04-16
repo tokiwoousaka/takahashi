@@ -1,6 +1,10 @@
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE GADTs #-}
 module Main where
 import Lib
 import Control.Concurrent.MVar
+import Control.Object
+import Control.Monad.State
 import Pipes
 import Data.Maybe
 import qualified Pipes.Prelude as P
@@ -15,6 +19,7 @@ main = do
   --day20151107pipes
   --day20151107pipesSample
   day20160416NLNagoya
+  day20160416NLNagoyaSample
 
 -----------------------------------------------
 -- for day20150913objective
@@ -45,7 +50,7 @@ day20150913objectiveSample = do
   print res -- (2, "HogePiyo")
   res <- inst .! "Fuga"
   print res -- (3, "HogePiyoFuga")
-  
+
 -----------------------------------------------
 -- for day20151107pipes
 
@@ -94,4 +99,26 @@ toTuple = P.map $ \lst -> (length lst, lst, listToMaybe lst)
 hoges :: Monad m => Producer String m ()
 hoges = each ["Hoge", "Piyo", "Fuga", "Hogera"]
 
+-----------------------------------------------
+-- for day20160416NLNagoya
 
+data Counter a where
+  PrintCount :: Counter ()
+  Increment :: Counter ()
+
+counter :: Int -> Object Counter IO
+counter s = s @~ \case
+  PrintCount -> get >>= liftIO . print
+  Increment -> modify (+1)
+
+day20160416NLNagoyaSample :: IO ()
+day20160416NLNagoyaSample = do
+  putStrLn " ---- sample for counter ---- "
+  cntr <- new $ counter 10
+  cntr.-PrintCount -- 10
+  cntr.-Increment
+  cntr.-Increment
+  cntr.-Increment
+  cntr.-Increment
+  cntr.-PrintCount -- 14
+  return ()
