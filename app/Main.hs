@@ -18,8 +18,11 @@ main = do
   --day20150913objectiveSample 
   --day20151107pipes
   --day20151107pipesSample
-  day20160416NLNagoya
-  day20160416NLNagoyaSample
+  --day20160416NLNagoya
+  --day20160416NLNagoyaSample
+  --day20160627Sunotora
+  --day20170206otr
+  return ()
 
 -----------------------------------------------
 -- for day20150913objective

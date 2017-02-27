@@ -24,6 +24,8 @@ library
                      , Day20150913objective
                      , Day20151107pipes
                      , Day20160416NLNagoya
+                     , Day20160627Sunotora
+                     , Day20170206otr
                      , Lib
   build-depends:       base >= 4.7 && < 5
                      , takahashi

@@ -1,0 +1,69 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script type="text/javascript">
+    var SlideList = []
+    var SlideIndex = 0;
+    var Title = "Slide";
+
+    function init(){
+      SlideList = document.getElementsByName("pages");
+      changeSlide(0);
+    }
+
+    function changeSlide(index){
+      if(0 > index || index >= SlideList.length) return;
+      for(i = 0; i < SlideList.length ;i++) {
+        if(i == index) {
+          SlideList[i].style.display = "table-cell";
+          document.title = Title + " - " + (i + 1) + "/" + SlideList.length;
+        } else {
+          SlideList[i].style.display = "none";
+        }
+      }
+      SlideIndex = index;
+    }
+
+    document.onkeydown = function(e){
+      if(e.keyCode == 39 || e.keyCode == 34) changeSlide(SlideIndex + 1);
+      if(e.keyCode == 37 || e.keyCode == 33) changeSlide(SlideIndex - 1);
+    }
+
+    // -----
+
+    function judgeMoveSlide(x){
+      if(x > (window.innerWidth / 3 * 2)) changeSlide(SlideIndex + 1);
+      if(x < (window.innerWidth / 3)) changeSlide(SlideIndex - 1);
+    }
+
+    document.ontouchend = function(e){
+      judgeMoveSlide(e.changedTouches[0].pageX);
+    }
+
+  </script>
+  <style>
+    html, body {
+      height: 98%;
+      width: 99%; 
+      overflow:hidden;
+    }
+    h1, h2, h3, ul, p {
+      margin:0px; 
+      padding:0px;
+    }
+    .slide {
+      font-size:45pt;
+      display:inline-table; 
+      width:100%; 
+      height:100%; 
+    }
+  </style>
+<head>
+<body onload="init()" style="height:100%">
+  <div class="slide">
+
+<div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><h1>Haskellでポーカー</h1><p>2016/6/27 ちゅーん(@its_out_of_tune)<br />for すのとら迎撃会</p></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;background:#c8c8c8;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>はじめに</h1></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>自己紹介</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>省　略</h1></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>近状報告</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>NuGetつらい</h1></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>ポーカーの連載</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>ブログでポーカーを作る連載</p></div></div></div><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;vertical-align:middle;display:table-cell;font-size:40px;color:#000000;padding-left:8%;border-width:10;border-style:double;border-color:#000000;box-sizing:border-box;font-family:'Consolas','Liberation Mono','Menlo','Courier',monospace;white-space:pre"><p>http://tune.hateblo.jp/entry/2015/05/12/023112</p></div></div></div><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>絶賛放置中</p></div></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>ポーカーの連載</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:33%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><p>何故ポーカーなのか</p></div></div></div><div class="block" style="height:66%;width:100%"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;color:#000000;background:#c8c8c8;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>（ドローポーカーなら）皆知っている</li><li>程良いボリューム感</li><li>関数型的なアイディアを応用しやすい</li><li>何より楽しい</li></ul></div></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>ポーカーの連載</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;font-size:80px;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>テキサスホールデムのが好き</li><li>でもルールが複雑</li><li>日本ではドローポーカーの方が有名</li><li>てなワケでドローポーカー</li></ul></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>ポーカーの連載</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>デモ</h1></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>今日話す事</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;font-size:80px;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>Haskell開発環境はもうOKだよね？</li><li>全部話すとけっこうなボリューム</li><li>今日は役の判定処理中心に読むよ</li><li>関数型的なポイントを押さえて駆け足</li><li>わからんかった所はブログ読んでね</li></ul></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;background:#c8c8c8;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>解説</h1></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>解説</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>ブログを読みながら説明</h1></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;background:#c8c8c8;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>おわりに</h1></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:18%;width:100%;display:table;color:#ffffff;background:#646464;border-width:10;border-style:solid;border-color:#969696;box-sizing:border-box"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell"><h2>まとめ</h2></div></div></div><div class="block" style="height:81%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;display:table-cell;font-size:80px;color:#000000;padding-top:3%;padding-left:8%;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><ul><li>制約の強い型でバグを防げる</li><li>型はドキュメントになる</li><li>型を設計する事で全体像が見えてくる</li><li>関数型には関数を糊付けする道具が沢山</li><li>小さく作って糊付けしていく<br />　　それが良い関数型スタイル！</li></ul></div></div></div></div><div name="pages" style="font-size:60px"><div class="block" style="height:100%;width:100%;display:table"><div class="block" style="height:100%;width:100%;text-align:center;vertical-align:middle;display:table-cell;color:#000000;border-width:10;border-style:solid;border-color:#ffffff;box-sizing:border-box"><h1>ありがとうございました<br />m(__)m</h1></div></div></div>
+
+  </div>
+</body>
+</html>
