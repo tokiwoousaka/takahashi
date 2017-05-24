@@ -26,6 +26,7 @@ library
                      , Day20160416NLNagoya
                      , Day20160627Sunotora
                      , Day20170206otr
+                     , Day20170521Church
                      , Lib
   build-depends:       base >= 4.7 && < 5
                      , takahashi

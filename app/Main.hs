@@ -22,6 +22,7 @@ main = do
   --day20160416NLNagoyaSample
   --day20160627Sunotora
   --day20170206otr
+  day20170521Church
   return ()
 
 -----------------------------------------------

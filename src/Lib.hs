@@ -9,6 +9,7 @@ module Lib
   , module Day20160416NLNagoya
   , module Day20160627Sunotora
   , module Day20170206otr
+  , module Day20170521Church
   ) where
 import Bug01
 import Bug02
@@ -20,4 +21,4 @@ import Day20151107pipes
 import Day20160416NLNagoya
 import Day20160627Sunotora
 import Day20170206otr
-
+import Day20170521Church
